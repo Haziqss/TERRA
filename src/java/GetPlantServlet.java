@@ -25,7 +25,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
     response.setCharacterEncoding("UTF-8");
 
     try (PrintWriter out = response.getWriter()) {
-        String sql = "SELECT plantID, plantName, plantType, plantDescription, plantTutorial, plantPicture FROM plant";
+        String sql = "SELECT plantID, plantName, plantType, plantDescription, plantTutorial, plantPrice, plantPicture FROM plant";
 
         try (Connection conn = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
              PreparedStatement statement = conn.prepareStatement(sql);
@@ -40,12 +40,14 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
                 String plantType = rs.getString("plantType") == null ? "N/A" : rs.getString("plantType");
                 String plantDescription = rs.getString("plantDescription") == null ? "N/A" : rs.getString("plantDescription");
                 String plantTutorial = rs.getString("plantTutorial") == null ? "N/A" : rs.getString("plantTutorial");
+                String plantPrice = rs.getString("plantPrice") == null ? "N/A" : rs.getString("plantPrice");
                 String plantPicture = rs.getString("plantPicture") == null ? "N/A" : rs.getString("plantPicture");
 
                 out.println("<tr data-id='" + plantID + "'>");
                 out.println("<td>" + plantID + "</td>");
                 out.println("<td>" + plantName + "</td>");
                 out.println("<td>" + plantType + "</td>");
+                out.println("<td>" + plantPrice + "</td>");
                 out.println("<td>");
                 out.println("<button class=\"btn btn-danger btn-sm\" onclick=\"deletePlant(" + plantID + ")\">Delete</button> ");
                 out.println("<a href='A-EditPlant.jsp?plantID=" + plantID +

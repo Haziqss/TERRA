@@ -46,6 +46,7 @@
                     <input type="text" class="form-control" id="plantTutorial" name="plantTutorial"
                         value="${param.plantTutorial}" />
                 </div>
+                 
             </div>
             <div class="row mb-3">
                 <div class="col">
@@ -53,10 +54,13 @@
                     <input type="file" class="form-control" id="plantPicture" name="plantPicture" />
                     <img src="${param.plantPicture}" alt="Current Image" style="max-width: 100px; margin-top: 10px;" />
                 </div>
+                 
             </div>
             <button class="btn btn-success" type="submit">Save Changes</button>
             <a class="btn btn-secondary" href="A-ManagePlant.jsp">Cancel</a>
         </form>
+                
+            
     </div>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 </body>

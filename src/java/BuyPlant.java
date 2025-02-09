@@ -54,6 +54,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
                         "&plantDescription=" + URLEncoder.encode(plantDescription, "UTF-8") +
                         "&plantType=" + URLEncoder.encode(plantType, "UTF-8") +
                         "&plantTutorial=" + URLEncoder.encode(plantTutorial, "UTF-8") +
+                        "&plantPrice=" + URLEncoder.encode(plantPrice, "UTF-8") +
                         "&plantPicture=" + URLEncoder.encode(plantPicture, "UTF-8") +
                         "' class=\"btn btn-primary btn-sm\">Buy</a>");
                 out.println("</td>");

@@ -73,7 +73,7 @@
     </div>
     <div class="mb-3">
         <label for="plantPrice" class="form-label">Plant Price</label>
-        <input class="form-control" id="plantPrice" name="plantTutorial" placeholder="0.00" rows="3">
+        <input class="form-control" id="plantPrice" name="plantPrice" placeholder="0.00" rows="3">
     </div>    
     <div class="mb-3">
         <label for="adminID" class="form-label">Admin ID</label>

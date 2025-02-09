@@ -48,6 +48,8 @@
             <p><strong>Name:</strong> ${param.plantName}</p>
             <p><strong>Description:</strong> ${param.plantDescription}</p>
             <p><strong>Type:</strong> ${param.plantType}</p>
+            <p><strong>Price:</strong> ${param.plantPrice}</p>
+            
             <p><strong>Image:</strong></p>
             <img src="${param.plantPicture}" alt="Current Image" class="img-fluid" style="max-width: 200px; margin-top: 10px; border-radius: 10px;" />
         </div>

@@ -24,7 +24,7 @@ public class GetPLantInfoServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         try (PrintWriter out = response.getWriter()) {
-            String sql = "SELECT PLANTNAME, PLANTPICTURE, PLANTTYPE, PLANTDESCRIPTION, PLANTTUTORIAL FROM PLANT";
+            String sql = "SELECT PLANTNAME, PLANTPICTURE, PLANTTYPE, PLANTDESCRIPTION, PLANTTUTORIAL, PLANTPRICE FROM PLANT";
 
             try (Connection conn = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
                  PreparedStatement stmt = conn.prepareStatement(sql);
@@ -39,6 +39,7 @@ public class GetPLantInfoServlet extends HttpServlet {
                     String plantType = rs.getString("PLANTTYPE");
                     String plantDescription = rs.getString("PLANTDESCRIPTION");
                     String plantTutorial = rs.getString("PLANTTUTORIAL");
+                    String plantPrice = rs.getString("PLANTPRICE");
                     
 
                     // Render HTML dynamically
@@ -49,6 +50,7 @@ public class GetPLantInfoServlet extends HttpServlet {
                     out.println("<strong>Type:</strong> " + plantType + "<br>");
                     out.println("<strong>Description:</strong> " + plantDescription + "<br>");
                     out.println("<strong>Tutorial:</strong> " + plantTutorial + "</p>");
+                    out.println("<strong>Price:</strong> " + plantPrice + "</p>");
                     out.println("</div>");
                 }
 

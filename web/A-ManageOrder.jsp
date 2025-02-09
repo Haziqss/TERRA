@@ -49,7 +49,7 @@
                                         <div class="col-12 col-sm-12 col-md-12 col-xl-12 col-xxl-12 text-end d-xl-flex flex-column align-items-xl-end" style="margin: 0px;padding: 5px 15px;"><input type="search" id="searchInputPlant" placeholder="Search" style="margin-right: 10px;" oninput="searchTable('plantTable', 'searchInputPlant')">
                                             <div class="d-flex justify-content-end justify-content-sm-end justify-content-lg-end table-controls"><button class="btn btn-sm" type="button" style="font-family: 'Work Sans', sans-serif;color: var(--bs-body-bg);border-color: #000000;background: #000000;margin-right: 10px;margin-top: 10px;" onclick="printTable()">Print</button>
                                                 <div class="dropdown" style="padding-left: 0px;" data-bs-toggle="dropdown" aria-expanded="false"><button class="btn btn-sm dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown" id="filterDropdown" type="button" style="color: #f1f2f1;background: #000000;margin-top: 10px;margin-right: 15px;font-family: 'Work Sans', sans-serif;">Filter</button>
-                                                    <div class="dropdown-menu" aria-labelledby="filterDropdown"><a class="dropdown-item" href="#" onclick="sortTable('plantTable', 'date')">By Date</a><a class="dropdown-item" href="#" onclick="sortTable('plantTable', 'name')">By Name</a></div>
+                                                    <div class="dropdown-menu" aria-labelledby="filterDropdown"><a class="dropdown-item" href="#" onclick="sortTable('orderTable', 'date')">By Date</a><a class="dropdown-item" href="#" onclick="sortTable('plantTable', 'name')">By Name</a></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -58,33 +58,50 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="table-responsive" style="border-top-style: none;background: #171921;">
-                                            <table class="table table-striped table tablesorter" id="plantTable" style="display: block !important; visibility: visible !important;">
+                                            <table class="table table-striped table tablesorter" id="orderTable" style="display: block !important; visibility: visible !important;">
                                                 <thead class="thead-dark" style="background: rgb(33,37,48);border-width: 0px;border-color: rgb(0,0,0);border-bottom-color: #21252F;">
                                                     <tr style="border-style: none;border-color: rgba(255,255,255,0);background: #21252f;">
-                                                        <th class="text-center" style="font-family: 'Work Sans', sans-serif;color: var(--bs-table-striped-color);width: 30%;border-color: var(--bs-table-bg);">Plant ID</th>
-                                                        <th class="text-center" style="font-family: 'Work Sans', sans-serif;color: var(--bs-table-striped-color);width: 30%;border-color: var(--bs-table-bg);">Plant Name</th>
-                                                        <th class="text-center" style="font-family: 'Work Sans', sans-serif;color: var(--bs-table-striped-color);width: 130%;border-color: var(--bs-table-bg);">Plant Type</th>
-                                                        <th class="text-center" style="font-family: 'Work Sans', sans-serif;color: var(--bs-table-striped-color);width: 130%;border-color: var(--bs-table-bg);">Plant Price</th>
-                                                        <th class="text-center filter-false sorter-false" style="font-family: 'Work Sans', sans-serif;color: var(--bs-table-striped-color);border-color: var(--bs-table-bg);">Actions</th>
+                                                        <th class="text-center" style="font-family: 'Work Sans', sans-serif;color: var(--bs-table-striped-color);width: 30%;border-color: var(--bs-table-bg);">order ID</th>
+                                                        <th class="text-center" style="font-family: 'Work Sans', sans-serif;color: var(--bs-table-striped-color);width: 30%;border-color: var(--bs-table-bg);">Member Name</th>
+                                                        <th class="text-center" style="font-family: 'Work Sans', sans-serif;color: var(--bs-table-striped-color);width: 130%;border-color: var(--bs-table-bg);">Member Address</th>
+                                                        <th class="text-center" style="font-family: 'Work Sans', sans-serif;color: var(--bs-table-striped-color);width: 130%;border-color: var(--bs-table-bg);">Receipt</th>
+                                                        <th class="text-center" style="font-family: 'Work Sans', sans-serif;color: var(--bs-table-striped-color);width: 130%;border-color: var(--bs-table-bg);">Status</th>
+                                                        <th class="text-center" style="font-family: 'Work Sans', sans-serif;">Action</th>
+
+                                                        
                                                     </tr>
                                                 </thead>
-                                              <tbody class="text-center" id="plantTableBody">
-                                          <script>
-                                                // Fetch plant data and populate the table body
-                                                fetch("GetPlantServlet")
-                                                    .then(response => response.text())
-                                                    .then(data => {
-                                                        document.getElementById("plantTableBody").innerHTML = data;
+                                            <tbody id="plantTableBody">
+    <script>
+        fetch("GetOrderServlet")
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("plantTableBody").innerHTML = data;
+            })
+            .catch(error => console.error("Error fetching orders:", error));
 
-                                                        // Initialize search functionality after the table is populated
-                                                        document.getElementById("searchInputPlant").addEventListener("input", () => {
-                                                            searchTable('plantTable', 'searchInputPlant');
-                                                        });
-                                                    })
-                                                    .catch(error => console.error("Error fetching plant data:", error));
-                                            </script>
+        function toggleStatus(orderID, currentStatus) {
+            const newStatus = currentStatus === "Ongoing" ? "Complete" : "Ongoing";
 
-                                        </tbody>
+            fetch("UpdateOrderStatusServlet", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: "orderID=" + encodeURIComponent(orderID) + "&newStatus=" + encodeURIComponent(newStatus)
+            })
+            .then(response => response.text())
+            .then(data => {
+                if (data === "Success") {
+                    document.getElementById("statusBtn-" + orderID).innerText = newStatus;
+                    alert("Status updated to " + newStatus);
+                } else {
+                    alert("Failed to update status.");
+                }
+            })
+            .catch(error => console.error("Error:", error));
+        }
+    </script>
+</tbody>
+
 
                                             </table>
                                         </div>
@@ -126,30 +143,49 @@
 </script>
 
 <script>
-function deletePlant(plantId) {
-    if (confirm("Are you sure you want to delete this plant?")) {
-        fetch("DeletePlantServlet", {
+function updateStatus(orderID) {
+    const button = document.querySelector(`tr[data-id='${orderID}'] button.btn-warning, tr[data-id='${orderID}'] button.btn-success`);
+    const currentStatus = button.textContent.trim();
+
+    fetch("UpdateOrderStatusServlet", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: `orderID=${orderID}&currentStatus=${currentStatus}`
+    })
+    .then(response => response.text())
+    .then(newStatus => {
+        if (newStatus === "Complete" || newStatus === "Ongoing") {
+            button.textContent = newStatus;
+            button.classList.toggle("btn-success", newStatus === "Complete");
+            button.classList.toggle("btn-warning", newStatus === "Ongoing");
+        } else {
+            alert("Failed to update status.");
+        }
+    })
+    .catch(error => console.error("Error updating status:", error));
+}
+
+function deleteOrder(orderID) {
+    if (confirm("Are you sure you want to delete this order?")) {
+        fetch("DeleteOrderServlet", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            },
-            body: "plantId=" + encodeURIComponent(plantId)
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: "orderID=" + encodeURIComponent(orderID)
         })
         .then(response => response.text())
         .then(data => {
             if (data === "Success") {
-                alert("Plant deleted successfully!");
-                location.reload(); // Reload the table after deletion
+                alert("Order deleted successfully!");
+                location.reload();
             } else {
-                alert("Failed to delete plant. Please try again.");
+                alert("Failed to delete order. Server response: " + data);
             }
         })
-        .catch(error => {
-            console.error("Error:", error);
-            alert("An error occurred while deleting the plant.");
-        });
+        .catch(error => console.error("Error:", error));
     }
 }
+
+
 
 </script>
 

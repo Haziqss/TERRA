@@ -37,6 +37,7 @@ public class EditPlantServlet extends HttpServlet {
         String plantDescription = request.getParameter("plantDescription");
         String plantType = request.getParameter("plantType");
         String plantTutorial = request.getParameter("plantTutorial");
+        String plantPrice = request.getParameter("plantPrice");
         String filePath = null;
 
         // Handle file upload
@@ -69,14 +70,15 @@ public class EditPlantServlet extends HttpServlet {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
 
             // Update plant data in the database
-            String sql = "UPDATE plant SET plantName = ?, plantDescription = ?, plantType = ?, plantTutorial = ?, plantPicture = COALESCE(?, plantPicture) WHERE plantID = ?";
+            String sql = "UPDATE plant SET plantName = ?, plantDescription = ?, plantType = ?, plantTutorial = ?, plantPrice = ?, plantPicture = COALESCE(?, plantPicture) WHERE plantID = ?";
             try (PreparedStatement stmt = conn.prepareStatement(sql)) {
                 stmt.setString(1, plantName);
                 stmt.setString(2, plantDescription);
                 stmt.setString(3, plantType);
                 stmt.setString(4, plantTutorial);
-                stmt.setString(5, filePath); // Use the new image path if uploaded
-                stmt.setString(6, plantID);
+                stmt.setString(5, plantPrice);
+                stmt.setString(6, filePath); // Use the new image path if uploaded
+                stmt.setString(7, plantID);
 
                 int rowsUpdated = stmt.executeUpdate();
 

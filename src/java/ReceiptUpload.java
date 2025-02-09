@@ -33,6 +33,7 @@ public class ReceiptUpload extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         String memberName = request.getParameter("memberName");
+        String memberAddress = request.getParameter("memberAddress");
 
         Part filePart = request.getPart("receiptPicture");
         String filePath = null;
@@ -62,12 +63,14 @@ public class ReceiptUpload extends HttpServlet {
             
             Connection conn = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
 
-          String sql = "INSERT INTO checkout (receipt, memberName) "
-           + "VALUES (?, ?)";
+          String sql = "INSERT INTO checkout (receipt, memberName, memberAddress) "
+           + "VALUES (?, ?, ?)";
 
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.setString(1, filePath);
             statement.setString(2, memberName);
+            statement.setString(3, memberAddress);
+
 
             int rowsInserted = statement.executeUpdate();
 

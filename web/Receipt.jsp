@@ -55,6 +55,10 @@
         <label for="memberName" class="form-label">Customer Name</label>
         <input type="text" class="form-control" id="memberName" name="memberName" placeholder="Enter your name" required>
     </div>
+               <div class="mb-3">
+        <label for="memberAddress" class="form-label">Customer Address</label>
+        <input type="text" class="form-control" id="memberAddress" name="memberAddress" placeholder="Enter your Address" required>
+    </div>
     <div class="mb-3">
         <label for="receiptPicture" class="form-label">Receipt</label>
         <input type="file" class="form-control" id="receiptPicture" name="receiptPicture" accept="image/*" required>

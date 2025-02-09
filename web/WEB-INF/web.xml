@@ -64,6 +64,18 @@
         <servlet-name>FetchUserFeedServlet</servlet-name>
         <servlet-class>FetchUserFeedServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>GetOrderServlet</servlet-name>
+        <servlet-class>GetOrderServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteOrderServlet</servlet-name>
+        <servlet-class>DeleteOrderServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateOrderStatusServlet</servlet-name>
+        <servlet-class>UpdateOrderStatusServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RegisterUserServlet</servlet-name>
         <url-pattern>/RegisterUserServlet</url-pattern>
@@ -127,6 +139,18 @@
     <servlet-mapping>
         <servlet-name>FetchUserFeedServlet</servlet-name>
         <url-pattern>/FetchUserFeedServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetOrderServlet</servlet-name>
+        <url-pattern>/GetOrderServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteOrderServlet</servlet-name>
+        <url-pattern>/DeleteOrderServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateOrderStatusServlet</servlet-name>
+        <url-pattern>/UpdateOrderStatusServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
